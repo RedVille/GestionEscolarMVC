@@ -1,0 +1,48 @@
+﻿@model GestionEscolarMVC.Models.DetalleCalif
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DetalleCalif</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Idmateria)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Idmateria)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Idalumno)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Idalumno)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Calif1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Calif1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Calif2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Calif2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Calif3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Calif3)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
