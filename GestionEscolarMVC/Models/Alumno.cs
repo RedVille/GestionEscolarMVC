@@ -12,4 +12,5 @@ public partial class Alumno
     public string Apellido { get; set; } = null!;
 
     public string Correo { get; set; } = null!;
+    public ICollection<DetalleCalif>? DetalleCalifs { get; set; }
 }

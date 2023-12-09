@@ -10,4 +10,6 @@ public partial class DetalleMaestro
     public int Idmateria { get; set; }
 
     public int Idmaestro { get; set; }
+    public Materium? Materium { get; set; }
+    public Maestro? Maestro { get; set; }
 }

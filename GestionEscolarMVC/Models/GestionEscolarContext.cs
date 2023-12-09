@@ -61,6 +61,18 @@ public partial class GestionEscolarContext : DbContext
                 .HasColumnName("ID");
             entity.Property(e => e.Idalumno).HasColumnName("IDAlumno");
             entity.Property(e => e.Idmateria).HasColumnName("IDMateria");
+
+            entity.HasOne(d => d.Alumno)
+                .WithMany(p => p.DetalleCalifs)
+                .HasForeignKey(d => d.Idalumno)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetalleCalif_Alumno");
+
+            entity.HasOne(d => d.Materium)
+                .WithMany(p => p.DetalleCalifs)
+                .HasForeignKey(d => d.Idmateria)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetalleCalif_Materia");
         });
 
         modelBuilder.Entity<DetalleMaestro>(entity =>
@@ -74,6 +86,18 @@ public partial class GestionEscolarContext : DbContext
                 .HasColumnName("ID");
             entity.Property(e => e.Idmaestro).HasColumnName("IDMaestro");
             entity.Property(e => e.Idmateria).HasColumnName("IDMateria");
+
+            entity.HasOne(d => d.Maestro)
+                .WithMany(p => p.DetalleMaestros)
+                .HasForeignKey(d => d.Idmaestro)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetalleMaestro_Maestro");
+
+            entity.HasOne(d => d.Materium)
+                .WithMany(p => p.DetalleMaestros)
+                .HasForeignKey(d => d.Idmateria)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetalleMaestro_Materia");
         });
 
         modelBuilder.Entity<Maestro>(entity =>

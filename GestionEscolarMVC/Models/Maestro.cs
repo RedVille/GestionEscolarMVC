@@ -12,4 +12,5 @@ public partial class Maestro
     public string Apellido { get; set; } = null!;
 
     public string Correo { get; set; } = null!;
+    public ICollection<DetalleMaestro>? DetalleMaestros { get; set; }
 }

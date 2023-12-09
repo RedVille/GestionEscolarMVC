@@ -12,4 +12,7 @@ public partial class Materium
     public string? Descripcion { get; set; }
 
     public string? Horario { get; set; }
+    public ICollection<DetalleCalif>? DetalleCalifs { get; set; }
+    public ICollection<DetalleMaestro>? DetalleMaestros { get; set; }
+
 }

@@ -21,9 +21,17 @@ namespace GestionEscolarMVC.Controllers
         // GET: DetalleMaestroes
         public async Task<IActionResult> Index()
         {
-              return _context.DetalleMaestros != null ? 
-                          View(await _context.DetalleMaestros.ToListAsync()) :
-                          Problem("Entity set 'GestionEscolarContext.DetalleMaestros'  is null.");
+            if (_context.DetalleMaestros == null)
+            {
+                return Problem("Entity set 'GestionEscolarContext.DetalleCalifs' is null.");
+            }
+
+            var detalleMaestros = await _context.DetalleMaestros
+                .Include(dc => dc.Materium)
+                .Include(dc => dc.Maestro)
+                .ToListAsync();
+
+            return View(detalleMaestros);
         }
 
         // GET: DetalleMaestroes/Details/5
@@ -47,6 +55,8 @@ namespace GestionEscolarMVC.Controllers
         // GET: DetalleMaestroes/Create
         public IActionResult Create()
         {
+            ViewBag.Materias = new SelectList(_context.Materia, "Idmateria", "Nombre");
+            ViewBag.Maestros = new SelectList(_context.Maestros, "Idmaestro", "Nombre");
             return View();
         }
 
@@ -63,6 +73,8 @@ namespace GestionEscolarMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Materias = new SelectList(_context.Materia, "Idmateria", "Nombre", detalleMaestro.Idmateria);
+            ViewBag.Maestros = new SelectList(_context.Maestros, "Idmaestro", "Nombre", detalleMaestro.Idmaestro);
             return View(detalleMaestro);
         }
 
@@ -74,7 +86,10 @@ namespace GestionEscolarMVC.Controllers
                 return NotFound();
             }
 
-            var detalleMaestro = await _context.DetalleMaestros.FindAsync(id);
+            var detalleMaestro = await _context.DetalleMaestros
+            .Include(dm => dm.Materium)
+            .Include(dm => dm.Maestro)
+            .FirstOrDefaultAsync(m => m.Id == id);
             if (detalleMaestro == null)
             {
                 return NotFound();
@@ -126,7 +141,9 @@ namespace GestionEscolarMVC.Controllers
             }
 
             var detalleMaestro = await _context.DetalleMaestros
-                .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(dm => dm.Materium)
+            .Include(dm => dm.Maestro)
+            .FirstOrDefaultAsync(m => m.Id == id);
             if (detalleMaestro == null)
             {
                 return NotFound();

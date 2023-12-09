@@ -3,6 +3,15 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Gestión Escolar</h1>
+    <p>Selecciona una opción para navegar</p>
+    <br />
+    <div class="container-fluid mt-4">
+        <img src="https://cdn-icons-png.flaticon.com/128/1940/1940690.png" class="img-fluid rounded" alt="...">
+    </div>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Alumnos" asp-action="Index"><button type="button" class="btn btn-outline-dark btn-lg">Alumnos</button></a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Maestroes" asp-action="Index"><button type="button" class="btn btn-outline-dark btn-lg">Maestros</button></a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Materiums" asp-action="Index"><button type="button" class="btn btn-outline-dark btn-lg">Materias</button></a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="DetalleCalifs" asp-action="Index"><button type="button" class="btn btn-outline-dark btn-lg">Calificaciones</button></a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="DetalleMaestroes" asp-action="Index"><button type="button" class="btn btn-outline-dark btn-lg">Materias-Maestros</button></a>
 </div>

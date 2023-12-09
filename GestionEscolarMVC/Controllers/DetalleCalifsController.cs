@@ -21,9 +21,17 @@ namespace GestionEscolarMVC.Controllers
         // GET: DetalleCalifs
         public async Task<IActionResult> Index()
         {
-              return _context.DetalleCalifs != null ? 
-                          View(await _context.DetalleCalifs.ToListAsync()) :
-                          Problem("Entity set 'GestionEscolarContext.DetalleCalifs'  is null.");
+            if (_context.DetalleCalifs == null)
+            {
+                return Problem("Entity set 'GestionEscolarContext.DetalleCalifs' is null.");
+            }
+
+            var detalleCalifs = await _context.DetalleCalifs
+                .Include(dc => dc.Alumno)
+                .Include(dc => dc.Materium)
+                .ToListAsync();
+
+            return View(detalleCalifs);
         }
 
         // GET: DetalleCalifs/Details/5
@@ -35,7 +43,9 @@ namespace GestionEscolarMVC.Controllers
             }
 
             var detalleCalif = await _context.DetalleCalifs
-                .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(dc => dc.Alumno)
+            .Include(dc => dc.Materium)
+            .FirstOrDefaultAsync(m => m.Id == id);
             if (detalleCalif == null)
             {
                 return NotFound();
@@ -47,6 +57,9 @@ namespace GestionEscolarMVC.Controllers
         // GET: DetalleCalifs/Create
         public IActionResult Create()
         {
+            ViewBag.Alumnos = new SelectList(_context.Alumnos, "Idalumno", "Nombre");
+            ViewBag.Materias = new SelectList(_context.Materia, "Idmateria", "Nombre");
+
             return View();
         }
 
@@ -63,6 +76,10 @@ namespace GestionEscolarMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Alumnos = new SelectList(_context.Alumnos, "Idalumno", "Nombre", detalleCalif.Idalumno);
+            ViewBag.Materias = new SelectList(_context.Materia, "Idmateria", "Nombre", detalleCalif.Idmateria);
+
             return View(detalleCalif);
         }
 
@@ -74,7 +91,10 @@ namespace GestionEscolarMVC.Controllers
                 return NotFound();
             }
 
-            var detalleCalif = await _context.DetalleCalifs.FindAsync(id);
+            var detalleCalif = await _context.DetalleCalifs
+            .Include(dc => dc.Alumno)
+            .Include(dc => dc.Materium)
+            .FirstOrDefaultAsync(m => m.Id == id);
             if (detalleCalif == null)
             {
                 return NotFound();
@@ -126,7 +146,9 @@ namespace GestionEscolarMVC.Controllers
             }
 
             var detalleCalif = await _context.DetalleCalifs
-                .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(dc => dc.Alumno)
+            .Include(dc => dc.Materium)
+            .FirstOrDefaultAsync(m => m.Id == id);
             if (detalleCalif == null)
             {
                 return NotFound();
